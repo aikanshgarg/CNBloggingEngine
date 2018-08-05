@@ -1,0 +1,129 @@
+<main id = "posts-home" >
+
+	<div class = "left">
+
+		<h3>Users' List</h3> 
+		<hr style="color:rgb(255,51,0);"><br>
+
+        <% @users = User.all %>
+		
+		<% @users.each do |u| %>
+<em style="color: rgb(255,51,0); font-weight: bolder;"><%= u.email %> </em>
+    <% if user_signed_in? %> | 
+		<%= link_to "Add Friend", friendships_path(friend_id: u.id), class: "add-friend-link", method: :post%> 
+	<% end %>  <br><br>
+        <% end %>
+
+	</div>
+
+<!-- -------------------------------------------------------------------- -->
+
+    <div class = "middle">	
+
+	  <div class="new-post-form"> 
+		<%= form_for @post do |f| %>
+		<%= f.label :content, 'Hey, wanna add a post?', class: 'post-label' %> <br>
+		<%= f.text_area :content, class: 'forms' %> <br>
+		<%= f.submit 'Post', class: 'submit-button' %>
+		<% end %>
+	  </div>
+
+	  <div>
+	  <!-- this div has the list of all posts with their comments and likes feature nested in it --> 
+	       <ul id="all-posts">
+		   <h3 style="color: white; font-family: sans-serif; "> What users are talking about...</h3>
+			
+	        
+		   <div class="posts">
+		   
+		    <% @posts.reverse.each do |p| %>
+				 
+                <li class="posts-list" style="list-style: none;">
+				 <%= p.content %> | <%= p.user.email %>
+			     <% if user_signed_in? && p.user_id == current_user.id %>
+			     (<%= link_to 'Delete', destroy_post_path(p.id), class: 'delete-link', method: :delete, remote: true %>)
+			     <% end %> <br>
+
+			     <% if user_signed_in? %>
+			     	<sub>
+			     		<%= p.likes.length %> <img src="https://www.freeiconspng.com/uploads/youtube-like-button-png-11.png" width="12px;"> &nbsp  
+			            <%= link_to p.like_status_string(current_user.id), toggle_like_path(p.id), class: 'likes-link', method: :post %>
+			     	</sub>
+			     <% else %>
+			     <sub>
+			     	<%= p.likes.length %> <img src="https://www.freeiconspng.com/uploads/youtube-like-button-png-11.png" width="12px;">
+			     </sub>
+			     <% end %>   <hr>
+
+		       <div class = "comments">
+		         <ul>
+		         	<% p.comments.reverse.each do |c| %>
+		         		<li>
+		         			<sub> <%= c.content %> | <%= c.user.email %> </sub>
+		         	  <!-- so that user who owns the comment can delete it as well as the user who's post it is -->
+		         	        <% if  (user_signed_in? && c.user_id == current_user.id) %>
+		         	        <!-- || (user_signed_in? && p.user_id == current_user.id)  -->
+			                <sub>(<%= link_to 'Delete', destroy_comment_path(c.id), class: 'delete', class: 'delete-link', method: :delete %>)</sub>
+			                <% end %>
+			            </li>           
+		         </ul> 
+			             <% if user_signed_in? %>
+			     	       <sub>
+   			     		   &nbsp&nbsp&nbsp&nbsp&nbsp
+			     		   <%= c.likes.length %> <img src="https://www.freeiconspng.com/uploads/youtube-like-button-png-11.png" width="12px;"> &nbsp  
+			               <%= link_to c.like_status_string(current_user.id), toggle1_like_path(c.id), class: 'likes-link', method: :post %>
+			     	       </sub>
+			             <% else %>
+			             <sub>&nbsp&nbsp&nbsp&nbsp&nbsp
+			     	     <%= c.likes.length %> <img src="https://www.freeiconspng.com/uploads/youtube-like-button-png-11.png" width="12px;">
+			             </sub>
+			             <% end %>   
+
+                    <% end %>    <br><br>
+
+		         	<!--  Add Comment -->
+		         	<% if user_signed_in? %>
+		         	<%= form_for @comment do |f| %>
+		         	<%= f.hidden_field :post_id, value: p.id %>
+		         	<%= f.label :content, class: 'hidden' %>
+		         	<%= f.text_area :content, class: 'flex' %>
+		         	<%= f.submit 'Comment', class: 'submit-button' %>
+		         	<% end %>
+		         	<% end %>
+					
+			     </div>
+			</div>				
+		    </li>
+		    <!-- end of posts' for loop starting at line 39 -->
+		    <% end %>
+           </ul>
+
+	   </div>
+	    
+    </div>
+
+<!-- --------------------------------------------------------------------- -->
+
+
+	<div class = "right"> 
+
+		<h3> Friends' List </h3>
+		<hr style="color:rgb(255,51,0);">
+		<br> 
+		 <!-- current_user.friendships.friendship.friends.each do |uf| -->
+<!-- <em style="color: rgb(255,51,0); font-weight: bolder;"> friendship.friend.email  </em>              <br>
+		 link_to "Unfriend", friendship_path(friend_id: uf.id), class: "add-friend-link", method: :destroy <br><br>
+		 end -->
+
+ <!-- we apply if user_signed_in? condition as current_user is only valid for a user if he's signed-in --> 
+<% if user_signed_in? %>
+ 	<% current_user.friends.all.each do |fr| %>
+ 		
+ 			<em style="color: rgb(255,51,0); font-weight: bolder;"><%= fr.email %> </em> <br>
+             <!-- link_to "Unfriend", friendship_path(friend_id: fr.id), class: "add-friend-link", method: :destroy-->
+ 	 <% end %>
+ <% end %>
+	
+	</div>
+
+</main>

@@ -1,0 +1,115 @@
+// Place all the styles related to the posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#posts-home{
+position: relative;
+	display: flex;
+    justify-content: space-around;
+    color: white;
+    height: 100vh;
+    
+
+    margin: 0;
+
+    .left{
+    background-color:black;
+    width: 15%;
+    padding-top: 20px;
+    text-align: center;
+    border-color: rgb(255,51,0);
+    border-width: 5px;
+    border-style: groove;
+    border-radius: 11px;
+    font-family: sans-serif;
+    margin: 30px;
+    opacity: 0.8;
+    .add-friend-link{
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    }
+    }
+
+
+    .right{
+    background-color: black;
+    width: 15%;
+    padding-top: 20px;
+    text-align: center;
+    border-color: rgb(255,51,0);
+    border-width: 5px;
+    border-style: groove;
+    border-radius: 11px;
+    font-family: sans-serif;
+    margin: 30px;
+    opacity: 0.8;
+    }
+
+    .middle{
+     background-color: black;
+     width: 40%;
+     margin: 30px;
+     color: black;
+     border-color: rgb(255,51,0);
+     border-width: 5px;
+     border-style: groove;
+     border-radius: 11px;
+     display: flex;
+     flex-direction: column-reverse;
+     padding: 75px;
+     /*padding-top: 0px;*/
+     opacity: 0.9;
+
+     
+     .submit-button{
+        background-color: rgb(255,51,0);
+        color: white;
+        font-weight: bolder;
+        border-radius: 50px;
+        height: 30px;
+        width: 200px
+     }
+     
+     .hidden{
+     display: none;
+     }
+
+     .new-post-form{
+      
+     .post-label{
+       color: white;
+       font-weight:bolder;
+    }
+
+     .forms{
+     width: 270px;
+     height: 29px;
+     }
+    }
+
+    .posts-list{
+    
+     background-color: rgb(255,51,0);
+     font-family: sans-serif;
+     font-weight: bold;
+
+     .posts{
+        /*padding: 32px;*/
+        border-style: solid;
+        border-color: white;
+     }
+      .likes-link, .delete-link{
+       color: black;
+       text-decoration: none;
+      }
+      .flex{
+           display: flex;
+           flex-direction: column; 
+      }
+    }
+    
+}
+
+}

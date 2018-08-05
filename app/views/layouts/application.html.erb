@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Connecti</title>
+    <%= csrf_meta_tags %>
+<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div id="common-header">
+      
+       <div class="logo" style="padding-top: 15px">
+          <img src="https://www.freepnglogos.com/uploads/c-letter-logo-png-12.png" width="90">
+        </div>
+
+        <div style="padding-top: 15px">
+         <a href="http://0.0.0.0:3000/" style="text-decoration: none; color: white; font-size: 1.2vw; font-family: "Times New Roman", Times, serif;">
+           <h1 style="text-shadow: 2px 2px 12px rgb(255,51,0);">CONNECTi</h1>
+         </a> 
+        </div>
+
+      <div class = "auth-info-links">
+      
+       <% if user_signed_in? %>
+       <div id="sign-in-up">
+       <div class="box"> Nice to have you here, Mr.<em style="color: black; font-weight: bold;"> <%= current_user.email %> </em>! 
+       </div>
+       <div class="box"> <%= link_to 'Sign Out', destroy_user_session_path, class: 'color-change', method: :delete %> 
+       </div>
+     </div>
+
+       <% else %> 
+       <div id="sign-in-up">
+       <div class="box"> <%= link_to 'Sign In', new_user_session_path, class: 'color-change' %> </div>
+       <div class="box"> <%= link_to 'Sign Up', new_user_registration_path, class: 'color-change' %> </div>
+      </div>
+       <% end %>
+
+       </div>
+
+    </div>
+
+    <%= yield %>
+  </body>
+</html>
